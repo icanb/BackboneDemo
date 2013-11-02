@@ -52,3 +52,9 @@ body {
 .btn.load {
   top: 190px;
 }
+
+.canvas {
+  width: 720px;
+  height: 100%;
+  background-color: #efefef;
+}
