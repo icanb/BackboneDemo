@@ -7,6 +7,7 @@ define(function(require, exports, module) {
     var BoardModel = require('data/BoardModel');
     var ShapeModel = require('data/ShapeModel');
     var CircleView = require('views/CircleView');
+    var SquareView = require('views/SquareView');
 
 
     var BoardView = Backbone.View.extend({
@@ -14,10 +15,12 @@ define(function(require, exports, module) {
         mode: "circle",
 
         events: {
-            'click .alert' : 'alert'
-            // click on .canvas should call addShape
-            // connect save button to save
-            // connect load button to load
+            'click .alert' : 'alert',
+            'click .canvas': 'addShape',
+            'click .save'  : 'save',
+            'click .load'  : 'load',
+            'click .square': 'switchToSquare',
+            'click .circle': 'switchToCircle'
             // make the circle and square change the mode property
         },
 
@@ -52,6 +55,8 @@ define(function(require, exports, module) {
 
         render: function() {
 
+            this.$el.find('.circle').addClass('active');
+
             var canvasDiv = document.createElement('div');
             canvasDiv.id = "canvas";
             canvasDiv.className = "canvas";
@@ -78,16 +83,24 @@ define(function(require, exports, module) {
                 this.canvasDiv.appendChild(shapeView.render().el);
             }
 
+            if (shapeModel.get('type') == "square") {
+                var squareView = new SquareView(shapeModel);
+                this.canvasDiv.appendChild(squareView.render().el);
+            }
+
         },
 
         addShape: function(e) {
             var coord = this.getCoordinates(e);
 
-            var circleModel = new ShapeModel(coord);
+            var shapeModel = new ShapeModel(coord);
             if (this.mode == "circle") {
-                circleModel.setType('circle');
+                shapeModel.setType('circle');
             }
-            this.model.get('shapes').add(circleModel);
+            if (this.mode == "square") {
+                shapeModel.setType('square');
+            }
+            this.model.get('shapes').add(shapeModel);
         },
 
         getCoordinates: function(e) {
@@ -105,6 +118,18 @@ define(function(require, exports, module) {
             y -= this.canvasDiv.getBoundingClientRect().top + 30;
 
             return {xCoord: x, yCoord: y};
+        },
+
+        switchToSquare: function() {
+            this.mode = "square";
+            this.$el.find('.active').removeClass('active');
+            this.$el.find('.square').addClass('active');
+        },
+
+        switchToCircle: function() {
+            this.mode = "circle";
+            this.$el.find('.active').removeClass('active');
+            this.$el.find('.circle').addClass('active');
         }
 
     });
