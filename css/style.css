@@ -76,3 +76,7 @@ body {
   border-radius: 30px;
 }
 
+.active {
+  background-color: #cce;
+}
+

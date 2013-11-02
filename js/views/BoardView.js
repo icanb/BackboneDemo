@@ -61,13 +61,11 @@ define(function(require, exports, module) {
 
             this.renderShapes();
 
-            console.log(this.el);
             return this;
         },
 
         renderShapes: function() {
             this.model.get('shapes').each(function(shapeModel) {
-                console.log(shapeModel);
                 this.renderShape(shapeModel);
             }, this);
         },
@@ -83,15 +81,12 @@ define(function(require, exports, module) {
         },
 
         addShape: function(e) {
-            console.log("add shape");
             var coord = this.getCoordinates(e);
 
             var circleModel = new ShapeModel(coord);
-            console.log(this.mode);
             if (this.mode == "circle") {
                 circleModel.setType('circle');
             }
-            console.log(circleModel);
             this.model.get('shapes').add(circleModel);
         },
 
@@ -105,7 +100,7 @@ define(function(require, exports, module) {
                 x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
                 y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
             }
-            console.log(this.canvasDiv.offsetLeft);
+
             x -= this.canvasDiv.getBoundingClientRect().left + 30;
             y -= this.canvasDiv.getBoundingClientRect().top + 30;
 
