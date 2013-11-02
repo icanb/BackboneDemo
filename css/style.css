@@ -53,6 +53,10 @@ body {
   top: 190px;
 }
 
+.btn.alert {
+  top: 230px;
+}
+
 .canvas {
   position: relative;
   width: 720px;

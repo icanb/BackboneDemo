@@ -14,9 +14,8 @@ define(function(require, exports, module) {
         mode: "circle",
 
         events: {
-            'click .canvas': 'addShape',
-            'click .save'  : 'save',
-            'click .load'  : 'load'
+            'click .alert' : 'alert'
+            // click on .canvas should call addShape
             // connect save button to save
             // connect load button to load
             // make the circle and square change the mode property
@@ -39,6 +38,10 @@ define(function(require, exports, module) {
 
         load: function() {
             this.model.loadLocal('paint');
+        },
+
+        alert: function() {
+            alert('Hey Girl, Are you caffeine?');
         },
 
         reset: function() {

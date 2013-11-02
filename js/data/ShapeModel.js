@@ -3,7 +3,7 @@ define(function(require, exports, module) {
     'use strict';
     require('backbone');
     
-    var BoardModel = Backbone.Model.extend({
+    var ShapeModel = Backbone.Model.extend({
 
         initialize: function(coords) {
             
@@ -24,6 +24,6 @@ define(function(require, exports, module) {
 
     });
 
-    return BoardModel;
+    return ShapeModel;
 
 });
