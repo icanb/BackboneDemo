@@ -1,0 +1,54 @@
+body {
+  font-family: 'helvetica';
+  font-size: 12px;
+}
+.board { 
+  position: relative;
+  left: 50%;
+  width: 800px;
+  height: 480px;
+  margin-left: -400px;
+  margin-top: 80px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+}
+
+.shape {
+  position: absolute;
+  right: 10px;
+  display: inline-block;
+  height: 60px;
+  width: 60px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  text-align: center;
+}
+
+.shape.circle {
+  top: 10px;
+}
+
+.shape.square {
+  top: 80px;
+}
+
+.btn {
+  position: absolute;
+  right: 10px;
+  display: inline-block;
+  height: 30px;
+  width: 60px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  text-align: center;
+}
+
+.btn.save {
+  top: 150px;
+}
+
+.btn.load {
+  top: 190px;
+}
