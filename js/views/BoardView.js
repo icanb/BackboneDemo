@@ -4,26 +4,100 @@ define(function(require, exports, module) {
 
     require('backbone');
 
+
+    var BoardModel = require('data/BoardModel');
+    var ShapeModel = require('data/ShapeModel');
+    var CircleView = require('views/CircleView');
+
+
     var BoardView = Backbone.View.extend({
 
         mode: "circle",
 
         events: {
-
+            'click .canvas': 'addShape',
+            'click .save': 'addShape'
+            // connect save button to save
+            // connect load button to load
+            // make the circle and square change the mode property
         },
 
         initialize: function() {
+            _.bindAll(this);
+
+            this.model = new BoardModel({});
+
+            // listeners (read(or ask me) more about observer pattern)
+            this.listenTo(this.model.get('shapes'), 'add', this.renderShape);
+        },
+
+        save: function() {
+
+        },
+
+        load: function() {
 
         },
 
         render: function() {
+
             var canvasDiv = document.createElement('div');
             canvasDiv.id = "canvas";
             canvasDiv.className = "canvas";
+            this.canvasDiv = canvasDiv;
 
             this.el.appendChild(canvasDiv);
 
+            this.renderShapes();
+
+            console.log(this.el);
             return this;
+        },
+
+        renderShapes: function() {
+            this.model.get('shapes').each(function(shapeModel) {
+                this.renderShape(shapeModel);
+            }, this);
+        },
+
+        renderShape: function(shapeModel) {
+
+            // support Square shapes here
+            if (shapeModel.get('type') == "circle") {
+                var shapeView = new CircleView(shapeModel);
+                this.canvasDiv.appendChild(shapeView.render().el);
+            }
+
+        },
+
+        addShape: function(e) {
+
+            var coord = this.getCoordinates(e);
+
+            var circleModel = new ShapeModel(coord);
+
+            if (this.mode == "circle") {
+                circleModel.setType('circle');
+            }
+
+            this.model.get('shapes').add(circleModel);
+        },
+
+        getCoordinates: function(e) {
+            var x;
+            var y;
+            if (e.pageX || e.pageY) {
+                x = e.pageX;
+                y = e.pageY;
+            } else {
+                x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+                y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
+            }
+            console.log(this.canvasDiv.offsetLeft);
+            x -= this.canvasDiv.getBoundingClientRect().left + 30;
+            y -= this.canvasDiv.getBoundingClientRect().top + 30;
+
+            return {xCoord: x, yCoord: y};
         }
 
     });

@@ -54,7 +54,21 @@ body {
 }
 
 .canvas {
+  position: relative;
   width: 720px;
   height: 100%;
   background-color: #efefef;
+  overflow: hidden;
 }
+
+.shape-widget {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background-color: blue;
+}
+
+.shape-widget.circle {
+  border-radius: 30px;
+}
+
