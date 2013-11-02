@@ -4,7 +4,6 @@ define(function(require, exports, module) {
 
     require('backbone');
 
-
     var BoardModel = require('data/BoardModel');
     var ShapeModel = require('data/ShapeModel');
     var CircleView = require('views/CircleView');
@@ -16,7 +15,8 @@ define(function(require, exports, module) {
 
         events: {
             'click .canvas': 'addShape',
-            'click .save': 'addShape'
+            'click .save'  : 'save',
+            'click .load'  : 'load'
             // connect save button to save
             // connect load button to load
             // make the circle and square change the mode property
@@ -29,14 +29,22 @@ define(function(require, exports, module) {
 
             // listeners (read(or ask me) more about observer pattern)
             this.listenTo(this.model.get('shapes'), 'add', this.renderShape);
+            this.listenTo(this.model, 'reset', this.reset);
+
         },
 
         save: function() {
-
+            this.model.saveLocal('paint');
         },
 
         load: function() {
+            this.model.loadLocal('paint');
+        },
 
+        reset: function() {
+            this.listenTo(this.model.get('shapes'), 'add', this.renderShape);
+            this.canvasDiv.innerHTML = '';
+            this.renderShapes();
         },
 
         render: function() {
@@ -56,6 +64,7 @@ define(function(require, exports, module) {
 
         renderShapes: function() {
             this.model.get('shapes').each(function(shapeModel) {
+                console.log(shapeModel);
                 this.renderShape(shapeModel);
             }, this);
         },
@@ -71,15 +80,15 @@ define(function(require, exports, module) {
         },
 
         addShape: function(e) {
-
+            console.log("add shape");
             var coord = this.getCoordinates(e);
 
             var circleModel = new ShapeModel(coord);
-
+            console.log(this.mode);
             if (this.mode == "circle") {
                 circleModel.setType('circle');
             }
-
+            console.log(circleModel);
             this.model.get('shapes').add(circleModel);
         },
 
@@ -101,7 +110,6 @@ define(function(require, exports, module) {
         }
 
     });
-
 
     return BoardView;
 });

@@ -9,7 +9,6 @@ define(function(require, exports, module) {
             
             this.set('xCoord', coords.xCoord);
             this.set('yCoord', coords.yCoord);
-            this.set('type', "none");
 
         },
 
@@ -19,9 +18,7 @@ define(function(require, exports, module) {
 
         toJSON: function() {
             var json = _.clone(this.attributes);
-
             // need to call toJSON on nested collections and models
-            json.shapes = json.shapes.toJSON();
             return json;
         }
 

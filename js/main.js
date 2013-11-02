@@ -1,10 +1,11 @@
 require.config({
   paths: {
-    "jquery"     : "./libs/jquery.min",
-    "underscore" : "./libs/underscore-min",
-    "backbone"   : "./libs/backbone",
-    "views"      : "./views",
-    "data"       : "./data"
+    "jquery"          : "./libs/jquery.min",
+    "underscore"      : "./libs/underscore-min",
+    "backbone"        : "./libs/backbone",
+    "backbone-mixins" : "./BackboneMixins",
+    "views"           : "./views",
+    "data"            : "./data"
   },
 
   shim: {
@@ -14,12 +15,16 @@ require.config({
     "backbone": {
       exports: "Backbone",
       deps: ["underscore", "jquery"]
+    },
+    "backbone-mixins" : {
+      exports: "Backbone",
+      deps: ["backbone"]
     }
   }
 
 });
 
-require(['views/BoardView', 'backbone'], function(BoardView) {
+require(['views/BoardView', 'backbone', 'backbone-mixins'], function(BoardView) {
 
   'use strict';
 
