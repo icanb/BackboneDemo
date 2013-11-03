@@ -14,7 +14,10 @@ define(function(require, exports, module) {
         mode: "circle",
 
         events: {
-            'click .alert' : 'alert'
+            'click .alert' : 'alert',
+            'click .canvas': 'addShape',
+            'click .save'  : 'save',
+            'click .load'  : 'load'
             // click on .canvas should call addShape
             // connect save button to save
             // connect load button to load
@@ -29,7 +32,7 @@ define(function(require, exports, module) {
             // listeners (read(or ask me) more about observer pattern)
             this.listenTo(this.model.get('shapes'), 'add', this.renderShape);
             this.listenTo(this.model, 'reset', this.reset);
-
+            this.listenTo(this.model.get('shapes'), 'remove', this.removeShape);
         },
 
         save: function() {
@@ -71,7 +74,6 @@ define(function(require, exports, module) {
         },
 
         renderShape: function(shapeModel) {
-
             // support Square shapes here
             if (shapeModel.get('type') == "circle") {
                 var shapeView = new CircleView(shapeModel);
@@ -80,13 +82,15 @@ define(function(require, exports, module) {
 
         },
 
+        removeShape: function(shapeModel) {
+            this.$el.find('#' + shapeModel.cid).remove();
+        },
+
         addShape: function(e) {
             var coord = this.getCoordinates(e);
 
             var circleModel = new ShapeModel(coord);
-            if (this.mode == "circle") {
-                circleModel.setType('circle');
-            }
+            circleModel.setType(this.mode);
             this.model.get('shapes').add(circleModel);
         },
 

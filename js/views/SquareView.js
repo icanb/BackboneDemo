@@ -3,10 +3,9 @@ define(function(require, exports, module) {
     'use strict';
     require('backbone');
 
-    var CircleView = Backbone.View.extend({
+    var SquareView = Backbone.View.extend({
 
-        className: 'shape-widget circle',
-        id: "blabla",
+        className: 'shape-widget square',
 
         events: {
             'click' : 'removeModel'
@@ -29,8 +28,9 @@ define(function(require, exports, module) {
         removeModel: function() {
             this.model.collection.remove(this.model);
         }
+
     });
 
 
-    return CircleView;
+    return SquareView;
 });
